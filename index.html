@@ -4,6 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SafeLife — Smart bathroom safety for clinics</title>
+  <link
+      rel="icon"
+      href="safelifefavicon-transparent.png"
+      type="image/x-icon"
+    />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -651,22 +656,22 @@
         <h3 id="contact-head" style="margin:0 0 8px 0;color:var(--blue-900); height: auto;">Contact & information request</h3>
         <p class="note" style="margin:0 0 12px 0">Fill this to request more information or get pricing. We'll respond within 1-2 business days.</p>
 
-        <form id="contactForm" novalidate>
+        <form id="contactForm" novalidate action="process_form.php" method="POST">
           <div style="margin-bottom:12px">
             <label for="name">Your name</label>
-            <input id="name" type="text" required placeholder="e.g., Dr. John Doe"/>
+            <input id="name" type="text" required placeholder="e.g., Dr. John Doe" name="name"/>
           </div>
           <div style="margin-bottom:12px">
             <label for="org">Clinic / Organization</label>
-            <input id="org" type="text" required placeholder="e.g., Pine Grove Clinic"/>
+            <input id="org" type="text" required placeholder="e.g., Pine Grove Clinic" name="subject"/>
           </div>
           <div style="margin-bottom:12px">
             <label for="email">Email</label>
-            <input id="email" type="email" required placeholder="you@clinic.org"/>
+            <input id="email" type="email" required placeholder="you@clinic.org" name="email"/>
           </div>
           <div style="margin-bottom:12px">
             <label for="message">Message (optional)</label>
-            <textarea id="message" rows="4" placeholder="What would you like to demo, timeline, budget, etc."></textarea>
+            <textarea id="message" rows="4" placeholder="What would you like to demo, timeline, budget, etc." name="message"></textarea>
           </div>
 
           <div style="display:flex;gap:8px;align-items:center">
@@ -751,30 +756,30 @@
 
       formStatus.style.color = 'var(--slate-600)';
       formStatus.textContent = 'Sending...';
-      fetch('process_form.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded' // or JSON if you went with Option 1
-        },
-        body: new URLSearchParams({
-          name: name,
-          email: email,
-          message: $('#message').value.trim(),
-          subject: `Info request from ${org}`
-        })
-      })
-      .then(response => response.text()) // ✅ read response body
-      .then(text => {
-        console.log("Server response:", text); // ✅ log to console
-        formStatus.style.color = 'green';
-        formStatus.textContent = text; // show server echo in UI too
-        form.reset();
-      })
-      .catch(err => {
-        console.error("Fetch error:", err);
-        formStatus.style.color = 'crimson';
-        formStatus.textContent = 'There was an error submitting the form.';
-      });
+      // fetch('process_form.php', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/x-www-form-urlencoded' // or JSON if you went with Option 1
+      //   },
+      //   body: new URLSearchParams({
+      //     name: name,
+      //     email: email,
+      //     message: $('#message').value.trim(),
+      //     subject: `Info request from ${org}`
+      //   })
+      // })
+      // .then(response => response.text()) // ✅ read response body
+      // .then(text => {
+      //   console.log("Server response:", text); // ✅ log to console
+      //   formStatus.style.color = 'green';
+      //   formStatus.textContent = text; // show server echo in UI too
+      //   form.reset();
+      // })
+      // .catch(err => {
+      //   console.error("Fetch error:", err);
+      //   formStatus.style.color = 'crimson';
+      //   formStatus.textContent = 'There was an error submitting the form.';
+      // });
     });
 
     function validateEmail(e){
