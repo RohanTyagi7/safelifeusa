@@ -256,7 +256,10 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         font-size: 3em;
     }
-    @media (max-width: 768px) {
+    /* ===== Enhanced Mobile Responsiveness ===== */
+
+/* For phones and small devices */
+@media (max-width: 768px) {
   .container {
     padding: 20px;
   }
@@ -301,7 +304,7 @@
   }
 
   .btn {
-    width: 100%;
+    /*width: 100%;*/
     text-align: center;
   }
 
@@ -326,7 +329,7 @@
 
   .step {
     min-width: unset;
-    width: 100%;
+    width: calc(100vw - 32px);
   }
 
   /* FAQ and contact sections */
@@ -337,7 +340,13 @@
   /* Make FAQ & contact stacked instead of side-by-side */
   .faq + section,
   .faq + aside,
-  .faq + div {
+  .faq + div,
+  .contact + section,
+  .contact + aside,
+  .contact + div,
+  .pricing + section,
+  .pricing + aside,
+  .pricing + div{
     display: block;
   }
 
@@ -401,6 +410,7 @@
     padding-bottom: 20px;
   }
 }
+
   </style>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
 
@@ -730,11 +740,11 @@
           subject: `Info request from ${org}`
         })
       })
-      .then(response => response.text()) // ✅ read response body
+      .then(response => response.text())
       .then(text => {
-        console.log("Server response:", text); // ✅ log to console
+        console.log("Server response:", text);
         formStatus.style.color = 'green';
-        formStatus.textContent = text; // show server echo in UI too
+        formStatus.textContent = text;
         form.reset();
       })
       .catch(err => {
