@@ -237,6 +237,12 @@
         outline: 3px solid var(--blue-900);
         outline-offset: -3px;
     }
+    #gridSection{
+      display:grid;
+      grid-template-columns:1fr 420px;
+      gap:20px;
+      margin-top:28px;
+    }
 
     /* small utilities */
     .muted{color:rgba(71,85,105,0.8)}
@@ -290,6 +296,16 @@
     gap: 20px;
   }
 
+  nav{
+    display: none;
+  }
+
+  .brand {
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+
   .hero-left {
     text-align: left;
   }
@@ -338,16 +354,10 @@
   }
 
   /* Make FAQ & contact stacked instead of side-by-side */
-  .faq + section,
-  .faq + aside,
-  .faq + div,
-  .contact + section,
-  .contact + aside,
-  .contact + div,
-  .pricing + section,
-  .pricing + aside,
-  .pricing + div{
+  .faq{
     display: block;
+    width: 100%;
+    margin-top: 20px;
   }
 
   /* Adjust cost form layout */
@@ -360,6 +370,19 @@
     font-size: 12px;
     margin-top: 28px;
   }
+  body{
+    justify-content: center;
+    width: 100vw;
+  }
+  #gridSection{
+    display: block;
+    width: 100%;
+  }
+
+  #pricing{
+    margin-top: 20px;
+  }
+  
 }
 
 /* Even smaller phones (e.g., 480px and below) */
@@ -539,7 +562,7 @@
     </section>
     -->
     <!-- FAQ & Contact -->
-    <div style="display:grid;grid-template-columns:1fr 420px;gap:20px;margin-top:28px">
+    <div id="gridSection">
       <section id="faq" aria-labelledby="faq-head" class="card" style="padding:18px">
         <h3 id="faq-head" style="margin:0 0 12px 0;color:var(--blue-900)">FAQ</h3>
 
@@ -740,11 +763,11 @@
           subject: `Info request from ${org}`
         })
       })
-      .then(response => response.text())
+      .then(response => response.text()) // ✅ read response body
       .then(text => {
-        console.log("Server response:", text);
+        console.log("Server response:", text); // ✅ log to console
         formStatus.style.color = 'green';
-        formStatus.textContent = text;
+        formStatus.textContent = text; // show server echo in UI too
         form.reset();
       })
       .catch(err => {
