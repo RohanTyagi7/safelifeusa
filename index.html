@@ -441,6 +441,10 @@
 
   </style>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    emailjs.init('-dsk0JeuctaNpMu3g')
+  </script>
 
 </head>
 <body>
@@ -656,22 +660,22 @@
         <h3 id="contact-head" style="margin:0 0 8px 0;color:var(--blue-900); height: auto;">Contact & information request</h3>
         <p class="note" style="margin:0 0 12px 0">Fill this to request more information or get pricing. We'll respond within 1-2 business days.</p>
 
-        <form id="contactForm" novalidate action="process_form.php" method="POST">
+        <form id="contactForm" novalidate>
           <div style="margin-bottom:12px">
             <label for="name">Your name</label>
-            <input id="name" type="text" required placeholder="e.g., Dr. John Doe" name="name"/>
+            <input id="name" type="text" required placeholder="e.g., Dr. John Doe"/>
           </div>
           <div style="margin-bottom:12px">
             <label for="org">Clinic / Organization</label>
-            <input id="org" type="text" required placeholder="e.g., Pine Grove Clinic" name="subject"/>
+            <input id="org" type="text" required placeholder="e.g., Pine Grove Clinic"/>
           </div>
           <div style="margin-bottom:12px">
             <label for="email">Email</label>
-            <input id="email" type="email" required placeholder="you@clinic.org" name="email"/>
+            <input id="email" type="email" required placeholder="you@clinic.org"/>
           </div>
           <div style="margin-bottom:12px">
             <label for="message">Message (optional)</label>
-            <textarea id="message" rows="4" placeholder="What would you like to demo, timeline, budget, etc." name="message"></textarea>
+            <textarea id="message" rows="4" placeholder="What would you like to demo, timeline, budget, etc."></textarea>
           </div>
 
           <div style="display:flex;gap:8px;align-items:center">
@@ -756,30 +760,22 @@
 
       formStatus.style.color = 'var(--slate-600)';
       formStatus.textContent = 'Sending...';
-      // fetch('process_form.php', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded' // or JSON if you went with Option 1
-      //   },
-      //   body: new URLSearchParams({
-      //     name: name,
-      //     email: email,
-      //     message: $('#message').value.trim(),
-      //     subject: `Info request from ${org}`
-      //   })
-      // })
-      // .then(response => response.text()) // ✅ read response body
-      // .then(text => {
-      //   console.log("Server response:", text); // ✅ log to console
-      //   formStatus.style.color = 'green';
-      //   formStatus.textContent = text; // show server echo in UI too
-      //   form.reset();
-      // })
-      // .catch(err => {
-      //   console.error("Fetch error:", err);
-      //   formStatus.style.color = 'crimson';
-      //   formStatus.textContent = 'There was an error submitting the form.';
-      // });
+      emailjs.send("service_0jrctpl", "template_cpps95x", {
+        name: name,
+        message: $('#message').value.trim(),
+        email: email,
+        org: org,
+      })
+      .then(response => {
+        formStatus.style.color = 'green';
+        formStatus.textContent = "Sent!"; // show server echo in UI too
+        form.reset();
+      })
+      .catch(err => {
+        console.error("Fetch error:", err);
+        formStatus.style.color = 'crimson';
+        formStatus.textContent = 'There was an error submitting the form.';
+      });
     });
 
     function validateEmail(e){
